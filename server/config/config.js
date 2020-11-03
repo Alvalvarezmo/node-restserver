@@ -16,7 +16,7 @@ let urlDB;
 if (process.env.NODE_ENV === 'dev') {
     urlDB = 'mongodb://localhost:27017/cafe';
 } else {
-    urlDB = 'mongodb+srv://alvamo:j3aIlfSiDJOPScAM@cluster0.9wewg.mongodb.net/cafe';
+    urlDB = process.env.MONGO_URI; //MONGO_URI es una variable the entorno que se ha creado en Heroku para ocultar el usuario y el password en gitHub
 };
 
 process.env.URLDB = urlDB;
