@@ -13,8 +13,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 
-//rutas de usuario
-app.use(require('./routes/users'));
+//rutas generales del servidor
+app.use(require('./routes/index'));
 
 
 //database

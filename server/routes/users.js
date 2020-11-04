@@ -3,13 +3,19 @@ const express = require('express'); //express package -> instalado previamente
 const bcrypt = require('bcrypt'); //bcrypt package -> instalado previamente
 const _ = require('underscore') //underscore package -> instalado previamente
 const Ususario = require('../models/users'); //importamos el modelo de usuario
+const { verificaToken, verificaAdmin_Role } = require('../middlewares/auth'); //importamos los middlewares
 
 //definiciones
 const app = express();
 
 
 //rutas
-app.get('/usuario', function(req, res) {
+app.get('/usuario', verificaToken, (req, res) => {
+
+    return res.json({
+        ususario: req.usuario,
+    });
+
 
     let desde = req.query.desde || 0;
     desde = Number(desde);
@@ -46,7 +52,7 @@ app.get('/usuario', function(req, res) {
 
 });
 
-app.post('/usuario', function(req, res) {
+app.post('/usuario', [verificaToken, verificaAdmin_Role], (req, res) => {
 
     //tomamos los datos del URI cando hacemos post
     let body = req.body;
@@ -80,7 +86,7 @@ app.post('/usuario', function(req, res) {
 
 });
 
-app.put('/usuario/:id', function(req, res) {
+app.put('/usuario/:id', [verificaToken, verificaAdmin_Role], (req, res) => {
 
     //tomamos los datos del url
     let id = req.params.id;
@@ -109,7 +115,7 @@ app.put('/usuario/:id', function(req, res) {
 
 });
 
-app.delete('/usuario/:id', function(req, res) {
+app.delete('/usuario/:id', [verificaToken, verificaAdmin_Role], (req, res) => {
 
     //tomamos los datos del url
     let id = req.params.id;
